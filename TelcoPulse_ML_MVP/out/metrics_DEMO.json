@@ -1,0 +1,25 @@
+{
+  "mae_model": 2.328,
+  "mae_baseline_same_hour_last_week": 2.838,
+  "improvement_pct": 18.0,
+  "cells_model_beats_baseline_pct": 97.8,
+  "congestion_threshold_pct": 80.0,
+  "congested_hours_in_test": 472,
+  "congestion_precision": 0.949,
+  "congestion_recall": 0.75,
+  "train_rows": 85320,
+  "test_rows": 15120,
+  "test_days": 14,
+  "DEMO_ONLY_injected_waste_cells": 5,
+  "DEMO_ONLY_waste_precision": 1.0,
+  "DEMO_ONLY_waste_recall": 1.0,
+  "cells": 45,
+  "clusters": {
+    "k": 3,
+    "silhouette": 0.969
+  },
+  "source": "demo",
+  "cells_flagged_congestion_next_24h": 12,
+  "cells_flagged_energy_waste": 5,
+  "potential_saving_units": 416892.1
+}

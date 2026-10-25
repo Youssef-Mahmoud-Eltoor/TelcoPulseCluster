@@ -1,0 +1,82 @@
+[
+  {
+    "category":"SCALING",
+    "finding":"Diminishing returns when adding Workers",
+    "evidence":"runtime ~ workers^-0.47 (90% CI -0.52 to -0.43), R2=0.98, n=48",
+    "recommendation":"Gains flatten: shuffle, driver work or storage reads are limiting. Check Spark UI stage times, reduce shuffle volume, raise spark.sql.shuffle.partitions only if tasks are few.",
+    "confidence":"high",
+    "expected_gain_pct":null,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"SCALING",
+    "finding":"Serial (non-parallel) share is about 33%",
+    "evidence":"Amdahl fit at 2 GB, ethernet: max speed-up about 3.0x regardless of Workers",
+    "recommendation":"Reduce the serial part (driver collect, single-file writes, small-file listing, job start-up) before adding hardware.",
+    "confidence":"medium",
+    "expected_gain_pct":null,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"WORKLOAD",
+    "finding":"Fixed overhead dominates small workloads",
+    "evidence":"runtime ~ workload^0.80",
+    "recommendation":"Prefer batching more data per job; start-up cost is amortised.",
+    "confidence":"high",
+    "expected_gain_pct":null,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"NETWORK",
+    "finding":"wifi is 19% slower than ethernet",
+    "evidence":"median runtime ratio over 12 matched cells; by workers {1: 0.986, 2: 1.129, 3: 1.256, 4: 1.349}",
+    "recommendation":"Move the Worker and storage laptops to ethernet (cable). Expected runtime reduction about 16%.",
+    "confidence":"medium",
+    "expected_gain_pct":15.8,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"DATA",
+    "finding":"CPU and RAM are sampled on one host only",
+    "evidence":"benchmark_runner.py samples the host that runs the command",
+    "recommendation":"Add per-host sampling (docker stats on every Worker laptop) before trusting resource-based advice.",
+    "confidence":"high",
+    "expected_gain_pct":null,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"WHAT-IF",
+    "finding":"Adding Worker number 5 (extrapolation beyond tested range)",
+    "evidence":"model predicts 113s -> 102s at 5 GB, ethernet",
+    "recommendation":"Treat as a hypothesis and verify with an experiment.",
+    "confidence":"low",
+    "expected_gain_pct":10.0,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"STREAMING",
+    "finding":"Median streaming delay 107s against a design floor of 105s",
+    "evidence":"9 stream runs; floor = window 60 s + watermark 30 s + trigger 15 s",
+    "recommendation":"Delay near the floor is set by window design: shorten window or watermark to cut latency (trade-off: more late-data loss).",
+    "confidence":"medium",
+    "expected_gain_pct":null,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  },
+  {
+    "category":"STREAMING",
+    "finding":"Backlog appears at higher event rates",
+    "evidence":"delay > 1.3x floor at (workers, rate): [(1, 400.0)]",
+    "recommendation":"Capacity per Worker is exceeded there; size Workers for the expected rate or reduce the rate.",
+    "confidence":"medium",
+    "expected_gain_pct":null,
+    "generated_at":"2026-10-24T17:44:13.000",
+    "source":"demo"
+  }
+]

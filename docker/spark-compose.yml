@@ -1,0 +1,22 @@
+services:
+  spark-master:
+    image: telcopulse-spark-s3a:3.5.9
+    container_name: tp-spark-master
+    hostname: tp-spark-master
+    command:
+      - /opt/spark/bin/spark-class
+      - org.apache.spark.deploy.master.Master
+      - --host
+      - 0.0.0.0
+      - --port
+      - "7077"
+      - --webui-port
+      - "8080"
+    volumes:
+      - ../config/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf:ro
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+      - "7078:7078"
+      - "7079:7079"
+    restart: unless-stopped

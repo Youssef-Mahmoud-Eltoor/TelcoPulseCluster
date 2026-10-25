@@ -1,0 +1,10 @@
+1) Add to docker/spark/Dockerfile (then rebuild telcopulse-spark-s3a:3.5.9 on the Master laptop):
+     RUN pip3 install --no-cache-dir scikit-learn matplotlib
+2) Add to docker/spark/compose.master.yml, under volumes:
+     - ../../ml/src:/opt/telcopulse/ml:ro
+     - ../../ml/spark/submit_ml.sh:/opt/telcopulse/ml/submit_ml.sh:ro
+   then: docker compose -f docker/spark/compose.master.yml up -d
+3) Create ClickHouse tables once:  sql/05_ml_tables.sql
+4) Run (PowerShell on 192.168.1.11):
+     docker exec -it tp-spark-master bash /opt/telcopulse/ml/submit_ml.sh
+5) Results: ClickHouse ml_* tables + /opt/telcopulse/logs/ml_out (metrics.json, ml_summary.png)

@@ -1,0 +1,13 @@
+services:
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: tp-rustfs
+    env_file:
+      - ../config/rustfs.env
+    command: ["/data"]
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - G:/TelcoPulse/data/rustfs:/data
+    restart: unless-stopped
